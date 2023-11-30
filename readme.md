@@ -18,4 +18,5 @@ Quando si clicca su una bomba e finisce la partita, il software scopre tutte le 
 2 - in questa funzione creiamo un  ciclo while per poter controllare se il numero generato è gia presente. se lo è, il numero no viene poi aggiunto all'array, se non è presente viene invece aggiunto all'array
 3 - associamo alle celle della griglia le varie bombe e con un altro ciclo andiamo a controllare se l'utente clicca su una di esse. Se ci clicca sopra la casella diventera rossa altrimenti di un altro colore.
 4 - creiamo una variabile che vada a contare il numero di caselle no bomba prese e visualizziamo sul DOM questo risultato.
-.
+
+

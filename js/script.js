@@ -22,12 +22,13 @@ function generateBombs(n_of_bombs, num_cells){
     let bombs = [];
     /* CICLO FOR PER ANDARE A INSERIRE I NUMERI CASUALI, OVVERO LE BOMBE, NELL'ARRAY */
     for (let i=0; i<n_of_bombs; i++){
-        let bomb_number = generateUniqueNumber(bombs, num_cells);
+        let bomb_number = generateUniqueNumber(bombs,num_cells);
         bombs.push(bomb_number)
+        
     }
+    console.log(bombs)
     return bombs;
 }
-
 
 
 
@@ -36,11 +37,14 @@ function creazioneGriglia(num, side_cells){
     /* GENERO UN DIV */
     const elem_griglia = document.createElement(`div`);
     /* GLI ASSOCIO LA CLASS SQUARE */
+    elem_griglia
     elem_griglia.classList.add(`square`);
     elem_griglia.style.width = `calc(100% / ${side_cells})`
     elem_griglia.style.height = `calc(100% / ${side_cells})`
     /* LO NUMERO */
     elem_griglia.innerText = num;
+    
+    
     /* RITORNO IL RISULTATO */
     return elem_griglia
 }
@@ -97,26 +101,46 @@ function creazioneCella(){
         for(let i=0; i<num_cells; i++){
             /* RICHIAMO LA FUNZIONE creazioneGriglia */
             let square = creazioneGriglia(i+1, side_cells);
-                
+            square.id = i+1
+            
+                     
             /* EVENTO CAMBIO COLORE CELLA AL CLICK */
             square.addEventListener(`click`, function(){
                 /* SE IL NUMERO CALPESTATO NON CORRISPONDE AD UNA BOMBA */
-                if(!bombs.includes(i)){
-                    this.classList.toggle(`cliccato`);
-                    points++;
-                    document.getElementById('punti').innerText = `Punti: ${points}`
-                    console.log(`Hai cliccato la cella numero ${i+1}`)
-                }else{ /* SE IL NUMERO CORRISPONDE AD UNA BOMBA */
-                    this.classList.add(`bomb_clicked`);
-                    alert("Mi dispiace hai calpestato una bomba! Clicca su gioca per iniziare una nuova partita")
-                    griglia.innerHTML = ""
+                if(!gameOver){
+                    if(!bombs.includes(i+1)){
+                        this.classList.toggle(`cliccato`);
+                        points++;
+                        document.getElementById('punti').innerText = `Punti: ${points}`
+                        console.log(`Hai cliccato la cella numero ${i+1}`)
+                    }else{ /* SE IL NUMERO CORRISPONDE AD UNA BOMBA */
+                        this.classList.add(`bomb_clicked`);
+                        gameOver = true;
+                        alert("Hai calpestato una bomba, clicca Gioca per iniziare una nuova partita")
+                        revealMines(square, bombs, num_cells)
+                        
+                    }
+                    
                 }
-
+               
             })
+            
             /* APPENDO LO SQUARE ALLA GRIGLIA */
             griglia.appendChild(square);
             }    
+            
     })
+}
+
+function revealMines(num_cells, bombs){
+for (let i=0; i<num_cells; i++) {
+    if(bombs.includes(i+1)){
+        let square = document.getElementById(bombs)
+        console.log(square)
+        square[i].classList.add(`bomb_clicked`);
+        console.log(square)
+}
+}
 }
 /* RICHIAMO FUNZIONE creazioneCella */
 creazioneCella(button)
