@@ -1,0 +1,21 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+#grid{
+    width:  1000px;
+    height: 1000px;
+    flex-wrap: wrap;
+}
+.square{
+    
+    background-color: goldenrod;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.cliccato{
+    background-color: green;
+}
