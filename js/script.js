@@ -67,7 +67,8 @@ function creazioneCella(){
         /* DICHIARO LE CELLE A VALORE 0 */
         let num_cells;
         let side_cells;
-
+        /* VARIABILE GAMEOVER SETTATA SU FALSE */
+        let gameOver = false;
         switch(difficolta){
             /* PRIMO CASO: GRIGLIA 10x10 */
             case 1:
@@ -103,6 +104,7 @@ function creazioneCella(){
                 if(!bombs.includes(i)){
                     this.classList.toggle(`cliccato`);
                     points++;
+                    document.getElementById('punti').innerText = `Punti: ${points}`
                     console.log(`Hai cliccato la cella numero ${i+1}`)
                 }else{ /* SE IL NUMERO CORRISPONDE AD UNA BOMBA */
                     this.classList.add(`bomb_clicked`);
