@@ -1,3 +1,36 @@
+/* FUNZIONE CHE GENERA UN NUMERO UNICO CASUALE */
+function generateUniqueNumber(array_bombs, num_cells){
+    /* VARIABILE CHECK_NUMBER ASSEGNATA A FALSE */
+    let check_number = false;
+    /* VARIABILE RANDOMNUM A CUI ASSEGNEREMO UN VALORE CASUALE NEL CICLO WHILE */
+    let randomNum;
+
+    /* CICLO WHILE PER GENERARE NUMERI CASUALI */
+    while(!check_number){
+        randomNum = Math.floor(Math.random()*num_cells + 1);
+        /* SE IL NUMERO é PRESENTE SI ESCE DALL'IF E SI GENERA ALTRI NUMERI */
+        if(!array_bombs.includes(randomNum)){
+            check_number = true;
+        }
+    }
+    return randomNum;
+}
+
+/* FUNZIONE CHE GENERA LE BOMBE */
+function generateBombs(n_of_bombs, num_cells){
+    /* ARRAY BOMBS INIZIALIZZATO VUOTO */
+    let bombs = [];
+    /* CICLO FOR PER ANDARE A INSERIRE I NUMERI CASUALI, OVVERO LE BOMBE, NELL'ARRAY */
+    for (let i=0; i<n_of_bombs; i++){
+        let bomb_number = generateUniqueNumber(bombs, num_cells);
+        bombs.push(bomb_number)
+    }
+    return bombs;
+}
+
+
+
+
 /* FUNZIONE CHE GENERA LA GRIGLIA */
 function creazioneGriglia(num, side_cells){
     /* GENERO UN DIV */
@@ -27,7 +60,10 @@ function creazioneCella(){
         let livello = document.getElementById(`difficulty`);
         /* TRASFORMO L'INPUT IN UN VALORE */
         let difficolta = parseInt(livello.value);
-
+        /* NUMERO DI BOMBE PRESENTI NELLA GRIGLIA */
+        let number_of_bombs = 16;
+        /* VALORE PUNTEGGIO GIOCATORE INIZIALIZZATO A 0 */
+        let points = 0;
         /* DICHIARO LE CELLE A VALORE 0 */
         let num_cells;
         let side_cells;
@@ -53,7 +89,9 @@ function creazioneCella(){
                 alert("Seleziona un livello di difficolta")
                 break;
         } 
-
+        /* RICHIAMO FUNZIONE GENERA BOMBE */
+        const bombs = generateBombs(number_of_bombs, num_cells)
+        
         /* CICLO FOR PER CREARE I VARI QUADRATI */
         for(let i=0; i<num_cells; i++){
             /* RICHIAMO LA FUNZIONE creazioneGriglia */
@@ -61,8 +99,17 @@ function creazioneCella(){
                 
             /* EVENTO CAMBIO COLORE CELLA AL CLICK */
             square.addEventListener(`click`, function(){
-                this.classList.toggle(`cliccato`);
-                console.log(`Hai cliccato la cella numero ${i+1}`)
+                /* SE IL NUMERO CALPESTATO NON CORRISPONDE AD UNA BOMBA */
+                if(!bombs.includes(i)){
+                    this.classList.toggle(`cliccato`);
+                    points++;
+                    console.log(`Hai cliccato la cella numero ${i+1}`)
+                }else{ /* SE IL NUMERO CORRISPONDE AD UNA BOMBA */
+                    this.classList.add(`bomb_clicked`);
+                    alert("Mi dispiace hai calpestato una bomba! Clicca su gioca per iniziare una nuova partita")
+                    griglia.innerHTML = ""
+                }
+
             })
             /* APPENDO LO SQUARE ALLA GRIGLIA */
             griglia.appendChild(square);

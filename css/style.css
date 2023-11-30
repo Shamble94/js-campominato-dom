@@ -19,3 +19,6 @@
 .cliccato{
     background-color: green;
 }
+.bomb_clicked{
+    background-color: red;
+}
