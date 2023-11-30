@@ -42,6 +42,7 @@ function creazioneGriglia(num, side_cells){
     elem_griglia.style.width = `calc(100% / ${side_cells})`
     elem_griglia.style.height = `calc(100% / ${side_cells})`
     /* LO NUMERO */
+    
     elem_griglia.innerText = num;
     
     
@@ -103,26 +104,26 @@ function creazioneCella(){
             let square = creazioneGriglia(i+1, side_cells);
             square.id = i+1
             
-                     
+            
             /* EVENTO CAMBIO COLORE CELLA AL CLICK */
             square.addEventListener(`click`, function(){
                 /* SE IL NUMERO CALPESTATO NON CORRISPONDE AD UNA BOMBA */
                 if(!gameOver){
-                    if(!bombs.includes(i+1)){
-                        this.classList.toggle(`cliccato`);
+                    if(!bombs.includes(i+1) ){
+                        this.classList.toggle(`cliccato`);                        
                         points++;
                         document.getElementById('punti').innerText = `Punti: ${points}`
                         console.log(`Hai cliccato la cella numero ${i+1}`)
+                       
                     }else{ /* SE IL NUMERO CORRISPONDE AD UNA BOMBA */
                         this.classList.add(`bomb_clicked`);
                         gameOver = true;
                         alert("Hai calpestato una bomba, clicca Gioca per iniziare una nuova partita")
-                        revealMines(square, bombs, num_cells)
+                        revealMines(bombs)
                         
                     }
                     
                 }
-               
             })
             
             /* APPENDO LO SQUARE ALLA GRIGLIA */
@@ -132,14 +133,13 @@ function creazioneCella(){
     })
 }
 
-function revealMines(num_cells, bombs){
-for (let i=0; i<num_cells; i++) {
-    if(bombs.includes(i+1)){
-        let square = document.getElementById(bombs)
-        console.log(square)
-        square[i].classList.add(`bomb_clicked`);
-        console.log(square)
-}
+function revealMines(bombs){
+for (let i=0; i<bombs.length; i++) {
+    let cella_rossa = bombs[i];
+    console.log(cella_rossa)
+    let cell = document.getElementById(`${cella_rossa}`);
+    cell.classList.add ("bomb_clicked")
+   
 }
 }
 /* RICHIAMO FUNZIONE creazioneCella */
