@@ -93,7 +93,7 @@ function creazioneCella(){
             /* SE NON VIENE SELEZIONATO NESSUN VALORE SI CANCELLA LA GRIGLIA ATTUALE */
             default:
                 alert("Seleziona un livello di difficolta")
-                break;
+                return;
         } 
         /* RICHIAMO FUNZIONE GENERA BOMBE */
         const bombs = generateBombs(number_of_bombs, num_cells)
@@ -110,12 +110,12 @@ function creazioneCella(){
                 /* SE IL NUMERO CALPESTATO NON CORRISPONDE AD UNA BOMBA */
                 if(!gameOver){
                     if(!bombs.includes(i+1) ){
-                        
-                        this.classList.toggle(`cliccato`);                        
+                        if(!this.classList.contains(`cliccato`)){
+                        this.classList.add(`cliccato`);                        
                         points++;
                         document.getElementById('punti').innerText = `Punti: ${points}`
                         console.log(`Hai cliccato la cella numero ${i+1}`)
-                        
+                    }
                     }else{ /* SE IL NUMERO CORRISPONDE AD UNA BOMBA */
                         this.classList.add(`bomb_clicked`);
                         gameOver = true;
